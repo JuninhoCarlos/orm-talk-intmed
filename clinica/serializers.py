@@ -23,3 +23,9 @@ class MedicoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Medico
         fields = ("id", "crm", "nome", "clinicas")
+
+
+class SimpleMedicoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Medico
+        fields = ("id", "crm", "nome")
