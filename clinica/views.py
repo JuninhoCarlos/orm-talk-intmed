@@ -10,7 +10,7 @@ from .utils.time import timed
 class MedicoAPIView(ListAPIView):
     serializer_class = MedicoSerializer
     # permission_classes = [IsAuthenticated]
-    queryset = Medico.objects.all()
+    queryset = Medico.objects.prefetch_related("clinicas", "clinicas__juridico").all()
 
     @timed
     def list(self, request):

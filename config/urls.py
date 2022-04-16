@@ -24,4 +24,4 @@ urlpatterns = [
     path("clinicas/", ClinicaAPIView.as_view(), name="clinicas"),
 ]
 
-urlpatterns += [path("silk/", include("silk.urls", namespace="silk"))]
+# urlpatterns += [path("silk/", include("silk.urls", namespace="silk"))]
