@@ -25,7 +25,7 @@ class MedicoSerializer(serializers.ModelSerializer):
         fields = ("id", "crm", "nome", "clinicas")
 
 
-class SimpleMedicoSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Medico
-        fields = ("id", "crm", "nome")
+class SimpleMedicoSerializer(serializers.Serializer):
+    id = serializers.IntegerField()
+    crm = serializers.CharField(max_length=100)
+    nome = serializers.CharField(max_length=100)
