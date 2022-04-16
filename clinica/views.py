@@ -1,8 +1,8 @@
 from rest_framework.generics import ListAPIView
 from rest_framework.response import Response
 
-from .models import Medico
-from .serializers import MedicoSerializer
+from .models import Clinica, Medico
+from .serializers import ClinicaSerializer, MedicoSerializer
 from .utils.queries import CountQueries
 from .utils.time import timed
 
@@ -16,5 +16,18 @@ class MedicoAPIView(ListAPIView):
     def list(self, request):
         with CountQueries():
             queryset = self.get_queryset()
-            serializer = MedicoSerializer(queryset, many=True)
+            serializer = self.get_serializer(queryset, many=True)
+            return Response(serializer.data)
+
+
+class ClinicaAPIView(ListAPIView):
+    serializer_class = ClinicaSerializer
+    # permission_classes = [IsAuthenticated]
+    queryset = Clinica.objects.all()
+
+    @timed
+    def list(self, request):
+        with CountQueries():
+            queryset = self.get_queryset()
+            serializer = self.get_serializer(queryset, many=True)
             return Response(serializer.data)
