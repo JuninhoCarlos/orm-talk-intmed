@@ -23,7 +23,7 @@ class MedicoAPIView(ListAPIView):
 class ClinicaAPIView(ListAPIView):
     serializer_class = ClinicaSerializer
     # permission_classes = [IsAuthenticated]
-    queryset = Clinica.objects.all()
+    queryset = Clinica.objects.select_related("juridico").all()
 
     @timed
     def list(self, request):
