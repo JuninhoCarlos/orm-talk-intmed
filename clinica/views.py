@@ -20,9 +20,7 @@ class MedicoAPIView(ListAPIView):
     @timed
     def list(self, request):
         with CountQueries():
-            queryset = self.get_queryset()
-            serializer = self.get_serializer(queryset, many=True)
-            return Response(serializer.data)
+            return super().list(request)
 
 
 class ClinicaAPIView(ListAPIView):
@@ -51,7 +49,6 @@ class SimpleMedicoAPIView(ListAPIView):
         "cep",
         "email",
         "telefone",
-        "nome",
     )
 
     @print_queries
