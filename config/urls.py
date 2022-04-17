@@ -16,11 +16,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 
-from clinica.views import MedicoAPIView
+from clinica.views import ClinicaAPIView, MedicoAPIView
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("medicos/", MedicoAPIView.as_view(), name="medicos"),
+    path("clinicas/", ClinicaAPIView.as_view(), name="clinicas"),
 ]
 
-urlpatterns += [path("silk/", include("silk.urls", namespace="silk"))]
+# urlpatterns += [path("silk/", include("silk.urls", namespace="silk"))]
