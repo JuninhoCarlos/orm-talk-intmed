@@ -1,6 +1,8 @@
 from rest_framework.generics import ListAPIView
 from rest_framework.response import Response
 
+from django.db.models import Count, Q, Subquery
+
 from .models import Clinica, Medico
 from .serializers import (
     ClinicaSerializer,
@@ -15,24 +17,17 @@ from .utils.time import timed
 class MedicoAPIView(ListAPIView):
     serializer_class = MedicoSerializer
     # permission_classes = [IsAuthenticated]
-    queryset = Medico.objects.prefetch_related("clinicas", "clinicas__juridico").all()
-
-    @timed
-    def list(self, request):
-        with CountQueries():
-            return super().list(request)
+    queryset = Medico.objects.all()
 
 
 class ClinicaAPIView(ListAPIView):
     serializer_class = ClinicaSerializer
     # permission_classes = [IsAuthenticated]
-    queryset = Clinica.objects.select_related("juridico").all()
+    queryset = Clinica.objects.all()
 
-    @timed
     def list(self, request):
         with CountQueries():
-            queryset = self.get_queryset()
-            serializer = self.get_serializer(queryset, many=True)
+            serializer = self.get_serializer(self.get_queryset(), many=True)
             return Response(serializer.data)
 
 

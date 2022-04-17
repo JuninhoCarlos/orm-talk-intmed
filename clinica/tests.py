@@ -16,9 +16,8 @@ class TestClinica(APITestCase):
         """
         Test the number of queries for list of doctors
         """
-        url = reverse("medicos")
 
-        with self.assertNumQueries(3):
+        with self.assertNumQueries(4):
             response = self.client.get(reverse("medicos"))
 
         # is that enough?
@@ -27,5 +26,21 @@ class TestClinica(APITestCase):
         populate_medico(num_medicos=40)
         populate_clinica(num_medicos=40, num_clinicas=10)
 
-        with self.assertNumQueries(3):
+        with self.assertNumQueries(4):
             response = self.client.get(reverse("medicos"))
+
+    def test_number_of_clinica_queries(self):
+        """
+        Test the number of queries for list of clinics
+        """
+
+        url = reverse("clinicas")
+
+        with self.assertNumQueries(1):
+            response = self.client.get(url)
+
+        populate_medico(num_medicos=40)
+        populate_clinica(num_medicos=40, num_clinicas=10)
+
+        with self.assertNumQueries(1):
+            response = self.client.get(url)
